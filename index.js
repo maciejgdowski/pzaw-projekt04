@@ -42,11 +42,12 @@ app.get("/", (req, res) => {
   res.end(html);
 });
 app.get("/games", (req, res) => {
+  console.log("User session:", req.session.user);
   if (req.session.user) {
     res.render("games", {
       title: "List of Video Games",
-      games: getGameTitles(req.session.user.id, req.session.user.is_admin),
-      images: getAllGameImages(req.session.user.id, req.session.user.is_admin),
+      games: getGameTitles(getUserId(req.session.user.id).user_id, req.session.user.is_admin),
+      images: getAllGameImages(getUserId(req.session.user.id).user_id, req.session.user.is_admin),
       user: req.session.user,
     });
   } else {
@@ -54,13 +55,9 @@ app.get("/games", (req, res) => {
   }
 });
 
-app.get("/games/:title", (req, res) => {
-  const title = req.params.title;
-  if (
-    !getGameTitles(req.session.user.id, req.session.user.is_admin).includes(
-      title
-    )
-  ) {
+app.get("/games/:game_uuid", (req, res) => {
+  const gameId = getGameId(req.params.game_uuid).game_id;
+  if (!getGameTitles(req.session.user.id, req.session.user.is_admin).includes(gameId)) {
     res.status(404).end("Game not found");
   } else {
     res.render("game", {
@@ -136,7 +133,7 @@ app.post("/new", (req, res) => {
     description,
     link || null,
     logo || null,
-    req.session.user.id
+    getUserId(req.session.user.id)
   );
 
   //pobieranie id nowo dodanej gry
@@ -189,7 +186,7 @@ app.get("/edit/:game_id", (req, res) => {
     console.error("user is not logged in");
     return res.redirect("/login");
   }
-  const gameId = req.params.game_id;
+  const gameId = getGameId(req.params.game_id).game_id;
   const allGenres = getAllGenres();
   const allPlatforms = getAllPlatforms();
 
@@ -226,7 +223,7 @@ app.post("/edit/:game_id", (req, res) => {
     return res.redirect("/login");
   }
   const { title, release_date, developer, description, link, logo } = req.body;
-  const id = req.params.game_id;
+  const id = getGameId(req.params.game_id).game_id;
 
   const genres = getAllGenres();
   const platforms = getAllPlatforms();
@@ -338,7 +335,7 @@ app.post("/login", async (req, res) => {
     }
     req.session.user = {
       login: user.user_login,
-      id: user.user_id,
+      id: user.user_uuid,
       is_admin: user.is_admin,
     };
     console.log("User logged in successfully");
@@ -365,7 +362,8 @@ app.post("/register", async (req, res) => {
     return;
   }
 
-  db.prepare("INSERT INTO users (user_login, user_password) VALUES (?, ?)").run(
+  db.prepare("INSERT INTO users (user_uuid, user_login, user_password) VALUES (?, ?)").run(
+    crypto.randomUUID(),
     login,
     hashedPassword
   );
@@ -380,7 +378,7 @@ app.post("/register", async (req, res) => {
 
     req.session.user = {
       login: newUser.user_login,
-      id: newUser.user_id,
+      id: newUser.user_uuid,
     };
     console.log("User registered successfully");
     res.redirect(`/games/`);
@@ -403,4 +401,11 @@ app.listen(port, () => {
 
 const getExistingUser = (login) => {
   return db.prepare("SELECT * FROM users WHERE user_login = ?").get(login);
+};
+
+const getUserId = (user_uuid) =>{
+  return db.prepare("SELECT user_id FROM users WHERE user_uuid = ?").get(user_uuid);
+};
+const getGameId = (game_uuid) => {
+  return db.prepare("SELECT game_id FROM game_data WHERE game_uuid = ?").get(game_uuid);
 };

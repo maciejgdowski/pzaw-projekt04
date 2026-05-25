@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS "users";
 CREATE TABLE
 	IF NOT EXISTS "users" (
 		"user_id" INTEGER,
+		"user_uuid" STRING,
 		"user_login" VARCHAR(100) NOT NULL,
 		"user_password" TEXT NOT NULL,
 		"is_admin" BOOLEAN NOT NULL DEFAULT 0,
@@ -24,6 +25,7 @@ CREATE TABLE
 CREATE TABLE
 	IF NOT EXISTS "game_data" (
 		"game_id" INTEGER,
+		"game_uuid" STRING,
 		"game_title" VARCHAR(50),
 		"release_date" DATE,
 		"developer" VARCHAR(50),
@@ -70,25 +72,29 @@ CREATE TABLE
 INSERT INTO
 	"users" (
 		"user_id",
+		"user_uuid",
 		"user_login",
 		"user_password",
 		"is_admin"
 	)
 VALUES
 	(
-		1,
+		NULL,
+		'af6cd094-99fe-489b-b297-9b13b1b5e8e3',
 		'admin',
 		'$2b$10$6S/T4DUCRnyMgQ/X5F4EiuoE6Mi1DZMoHPO3.4s7CA20vwJ1F0c5G',
 		1
 	),
 	(
-		2,
+		NULL,
+		'6120d73d-b735-4cab-9bfe-b75946a341f7',
 		'user1',
 		'$2b$10$8OebMrgVaX3VPsv.UlM2bOasQgOsn6CUU2htntVLvm3OOlZu5TzTe',
 		0
 	),
 	(
-		3,
+		NULL,
+		'd2661b64-222b-403f-9239-f248f96871f3',
 		'user2',
 		'$2b$10$BpDHOV7lphhVxGXo49c1BexmXCyqjyJJiXdSYoLWbfpJW7tvgrQLG',
 		0
@@ -97,6 +103,7 @@ VALUES
 INSERT INTO
 	"game_data" (
 		"game_id",
+		"game_uuid",
 		"game_title",
 		"release_date",
 		"developer",
@@ -108,6 +115,7 @@ INSERT INTO
 VALUES
 	(
 		1,
+		'f9c8eb43-42ff-4d9e-950d-b1cc78c00a23',
 		'Valorant',
 		'2020-06-02',
 		'Riot Games',
@@ -118,6 +126,7 @@ VALUES
 	),
 	(
 		2,
+		'd4d4e607-7ff1-4d1e-9be0-7a84a9544538',
 		'The Witcher 3: Wild Hunt',
 		'2015-05-19',
 		'CD Projekt Red',
@@ -128,6 +137,7 @@ VALUES
 	),
 	(
 		3,
+		'47b37f06-8b79-4dc5-ad2a-d68b8a16cdd6',
 		'Minecraft',
 		'2011-11-18',
 		'Mojang Studios',
@@ -138,6 +148,7 @@ VALUES
 	),
 	(
 		4,
+		'77a57325-0466-4df1-800d-7d2fe900a4c6',
 		'Counter-Strike 2',
 		'2023-09-27',
 		'Valve Corporation',
@@ -148,6 +159,7 @@ VALUES
 	),
 	(
 		5,
+		'4b52dfc0-ae92-47b3-aa0e-5436beee0bfc',
 		'Cyberpunk 2077',
 		'2020-12-10',
 		'CD Projekt Red',
@@ -158,6 +170,7 @@ VALUES
 	),
 	(
 		6,
+		'20f77f4d-1ac1-41ae-a143-a01e3af56344',
 		'GTA V',
 		'2013-09-17',
 		'Rockstar Games',
@@ -168,6 +181,7 @@ VALUES
 	),
 	(
 		7,
+		'1782ff3f-fc7e-464d-b05d-ab918af63cdf',
 		'Overwatch 2',
 		'2022-10-04',
 		'Blizzard Entertainment',

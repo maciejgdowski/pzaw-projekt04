@@ -16,7 +16,11 @@ if (process.env.POPULATE_DB) {
 
 export const getGameTitles = (user_id, is_admin = 0) => {
   let titles = [];
-  const query = is_admin ? (db.prepare("SELECT game_title FROM game_data").all()) : db.prepare("SELECT game_title FROM game_data WHERE user_id=?").all(user_id);
+  const query = is_admin
+    ? db.prepare("SELECT game_title FROM game_data").all()
+    : db
+        .prepare("SELECT game_title FROM game_data WHERE user_id=?")
+        .all(user_id);
   query.forEach((title) => {
     titles.push(title.game_title);
   });
@@ -26,6 +30,10 @@ export const getGameData = (title) => {
   const data = db
     .prepare(`SELECT * FROM game_data WHERE game_title=?`)
     .get(title);
+  return data;
+};
+export const getGamesData = () => {
+  const data = db.prepare(`SELECT * FROM game_data`).all();
   return data;
 };
 export const getGameDataID = (id) => {
