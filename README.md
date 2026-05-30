@@ -72,13 +72,22 @@ npm run dev
 
 ### REVIEWER 1: pan Daniel
 - README zawiera tylko instrukcję uruchomienia, pamiętaj że to jest wizytówka projektu: warto dodać chociaż jedno zdanie opisujące projekt, a można dodatkowo udokumentować zaimplementowane funkcjonalności, obsługiwane ścieżki etc. &rarr; README zostało zaktualizowane o opis aplikacji oraz obsługiwane ścieżki
+
 - O ile dodanie danych testowych przy pomocy flagi środowiskowej jest okej, o tyle polecam zrobić do tego osobne narzędzie &rarr; utworzyłem skrypt `dev:populate` w package.json aby zautomatyzować dodawanie danych
+
 - Dorbny detal, ale dlaczego oglądanie gier pozwala je w ścieżce odnaleźć po nazwie, a ścieżka do edycji zawiera numeryczne id? &rarr; przepisałem większość ścieżek, aby w URL zawierały UUID gry, a nie jej tytuł/id
+
 - Stworzenie dwóch gier o tej samej nazwie powoduje, że drugiej nie da się zobaczyć wchodząc na ścieżkę /games/:nazwa_gry &rarr; dzięki UUID ten błąd został naprawiony
+
 - Nie działa edycja nazwy, opisu czy nazwy developera gry &rarr; naprawiłem wszystkie ścieżki
-- Błąd implementacji autoryzacji: Można modyfikować i usuwać wpisy innych osób, wystarczy znać/zgadnąć numeryczne ID, co nie jest trudne &rarr; użytkownicy teraz nie są wstanie zobaczyć/modyfikować innych wpisów, gdyż z bazy danych zostają wyjęte tylko dane związane z użytkownikiem
+
+- Błąd implementacji autoryzacji: Można modyfikować i usuwać wpisy innych osób, wystarczy znać/zgadnąć numeryczne ID, co nie jest trudne &rarr; użytkownicy teraz nie są wstanie zobaczyć/modyfikować innych wpisów, gdyż z bazy danych zostają wyjęte tylko dane związane z 
+użytkownikiem
+
 - UX: Wizualnie jest spójnie i ładnie.
+
 - bcrypt jest już przestarzały, przerzuć się na argon &rarr; wg. opinii osób na google argon jest nowocześniejszy i lepszy, ale bcrypt nie zawiera podatności na złośliwe oprogramowania, więc bibliotekę zostawiam
+
 - w index.js jest wszystko ze wszystkim, wyciągnij powiązane funkcjonalności do osobnych plików &rarr; ścieżki zostały przeniesione odpowiednio do `/routes/auth.routes.js` oraz `/routes/games.routes.js`
 
 
