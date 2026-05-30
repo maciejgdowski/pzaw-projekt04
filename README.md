@@ -18,7 +18,7 @@ npm run dev:populate
 npm run dev
 ```
 
-4. Na potrzeby doświadczenia deweloperskiego zostały utworzone 3 konta:
+4. Na potrzeby doświadczenia deweloperskiego zostały utworzone 3 konta z przykładowymi danymi:
    - konto administratorskie:
      - login: admin
      - hasło: admin
