@@ -24,8 +24,13 @@
         />
       </div>
       <button type="submit" class="btn btn-primary-subtle-20">Log In</button>
+      <% if (error) { %>
+       <div class="form-text">
+        <span class="text-danger">Error: <%= error %></span>
+      </div>
+      <% } %>
       <div class="form-text">
-        <p>Don't have an account? <a href="/register">Register</a></p>
+        <p>Don't have an account? <a href="/auth/register">Register</a></p>
       </div>
     </form>
   </div>

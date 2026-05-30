@@ -10,13 +10,13 @@
     </h1>
     <% if (user) { %>
     <div class="d-flex flex-row-reverse align-items-center g-col-2">
-      <a href="/logout" class="btn btn-primary-subtle-20" style="width: 5rem; height: 2.5rem;">Logout</a>
-      <p class="m-0 pe-3">Logged in as: <%= user.login %></p>
+      <a href="/auth/logout" class="btn btn-primary-subtle-20" style="width: 5rem; height: 2.5rem;">Logout</a>
+      <p class="m-0 pe-3">Logged in as: <%= user.login %> <%= user.is_admin ? `(admin)` : "" %></p>
     </div>
     <% } else { %>
     <div class="d-flex flex-row-reverse align-items-center g-col-2 gap-2">
-      <a href="/register" class="btn btn-primary-subtle-65" style="width: 5rem; height: 2.5rem;">Register</a>
-      <a href="/login" class="btn btn-primary-subtle-20" style="width: 5rem; height: 2.5rem;">Login</a>
+      <a href="/auth/register" class="btn btn-primary-subtle-65" style="width: 5rem; height: 2.5rem;">Register</a>
+      <a href="/auth/login" class="btn btn-primary-subtle-20" style="width: 5rem; height: 2.5rem;">Login</a>
       
     </div>
     <% } %>
@@ -25,18 +25,14 @@
   <div class="container-md grid" style="width: fit-content;">
     <% games.forEach(game=> { %>
     <div class="d-flex justify-content-center align-items-center g-col-12 g-col-sm-6 g-col-md-4 g-col-lg-3">
-      <a href="/games/<%= game %>" class="btn d-flex align-items-center justify-content-center m-2 border border-primary-subtle border-2 rounded" style="width: 200px; height: 125px;">
-        <img src="<% images.forEach(image => { %>
-         <% if (image.title == game) { %>
-                    <%= image.path %>
-                <% } %>
-        <% }) %>" alt="<%= game %>" style="width: 100%; height: 100%; object-fit: contain; object-position: center; display: block;" class="img img-fluid" />
+      <a href="/games/<%= game.game_uuid %>" class="btn d-flex align-items-center justify-content-center m-2 border border-primary-subtle border-2 rounded" style="width: 200px; height: 125px;">
+        <img src="<%= game.image ? game.image : "" %>" alt="<%= game.game_title %>" style="width: 100%; height: 100%; object-fit: contain; object-position: center; display: block;" class="img img-fluid" />
       </a>
     </div>
     <% }); %>
 
     <div class="d-flex justify-content-center align-items-center g-col-12 g-col-sm-6 g-col-md-4 g-col-lg-3">
-      <a href="/new" class="btn d-flex align-items-center justify-content-center m-2 border border-primary-subtle-20 border-2 rounded btn-primary-subtle-20" style="width: 200px; height: 125px">
+      <a href="/games/new" class="btn d-flex align-items-center justify-content-center m-2 border border-primary-subtle-20 border-2 rounded btn-primary-subtle-20" style="width: 200px; height: 125px">
         <img src="../assets/plus-circle.svg" alt="plus button" style="filter:invert(1); width: 25px; height: auto;" />
       </a>
     </div>

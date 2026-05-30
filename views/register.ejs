@@ -19,8 +19,13 @@
         <input type="password" class="form-control" id="password" name="password" />
       </div>
       <button type="submit" class="btn btn-primary-subtle-20">Register</button>
+      <% if (error) { %>
+       <div class="form-text">
+        <span class="text-danger">Error: <%= error %></span>
+      </div>
+      <% } %>
       <div class="form-text">
-        <p>Already have an account? <a href="/login">Log in</a></p>
+        <p>Already have an account? <a href="/auth/login">Log in</a></p>
       </div>
     </form>
   </div>
