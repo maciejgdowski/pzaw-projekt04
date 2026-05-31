@@ -2,16 +2,16 @@
 
 <main class="h-100 d-flex flex-column align-items-center">
   <div class="grid w-100 px-3">
-    <div class="g-col-2">
+    <div class="g-col-6 g-col-lg-2 d-flex flex-row align-items-center">
       <a href="/" class="btn btn-primary my-3" style="width: 5rem; height: 2.5rem;">Back</a>
     </div>
-    <h1 class="my-4 g-col-8 text-center">
+    <h1 class="my-4 g-col-8 text-center d-lg-block d-none">
       <%= title %>
     </h1>
     <% if (user) { %>
-    <div class="d-flex flex-row-reverse align-items-center g-col-2">
+    <div class="d-flex flex-row-reverse align-items-center g-col-lg-2 g-col-6">
       <a href="/auth/logout" class="btn btn-primary-subtle-20" style="width: 5rem; height: 2.5rem;">Logout</a>
-      <p class="m-0 pe-3">Logged in as: <%= user.login %> <%= user.is_admin ? `(admin)` : "" %></p>
+      <p class="m-0 pe-3 d-none d-sm-block">Logged in as: <%= user.login %> <%= user.is_admin ? `(admin)` : "" %></p>
     </div>
     <% } else { %>
     <div class="d-flex flex-row-reverse align-items-center g-col-2 gap-2">

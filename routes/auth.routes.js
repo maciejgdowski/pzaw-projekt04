@@ -33,12 +33,20 @@ authRouter.post("/login", async (req, res) => {
   const passwordMatch = await bcrypt.compare(password, user.user_password);
   if (!passwordMatch) {
     console.error("Incorrect password");
-    return res.redirect("/auth/login");
+    return res.render("login", {
+      title: "Login form",
+      form: {},
+      error: "Incorrect password",
+    });
   }
   req.session.regenerate((err) => {
     if (err) {
       console.error("Session regenerate error:", err);
-      return res.redirect("/auth/login");
+      return res.render("login", {
+        title: "Login form",
+        form: {},
+        error: `Session regenerate error: ${err}`,
+      });
     }
     req.session.user = {
       login: user.user_login,
@@ -65,42 +73,64 @@ authRouter.get("/register", (req, res) => {
 authRouter.post("/register", async (req, res) => {
   const login = req.body.login;
 
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  //check if user with the same login already exists
-  const existingUser = getExistingUser(login);
-  if (existingUser) {
-    console.error("User with this login already exists");
+  if (login.length < 4) {
+    console.error("Login must have at least 4 letters");
     res.render("register", {
       title: "Register form",
       form: {},
-      error: "User with this login already exists",
+      error: "Login must have at least 4 letters",
+    });
+  } else if (login.length > 24) {
+    res.render("register", {
+      title: "Register form",
+      form: {},
+      error: "Login cannot be longer than 24 chars",
+    });
+  } else if (req.body.password.length < 4) {
+    console.error("Password must have at least 4 letters");
+    res.render("register", {
+      title: "Register form",
+      form: {},
+      error: "Password must have at least 4 letters",
     });
   } else {
-    db.prepare("INSERT INTO users (user_uuid, user_login, user_password) VALUES (?, ?, ?)").run(
-      crypto.randomUUID(),
-      login,
-      hashedPassword,
-    );
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //check if user with the same login already exists
+    const existingUser = getExistingUser(login);
+    if (existingUser) {
+      console.error("User with this login already exists");
+      res.render("register", {
+        title: "Register form",
+        form: {},
+        error: "User with this login already exists",
+      });
+    } else {
+      db.prepare("INSERT INTO users (user_uuid, user_login, user_password) VALUES (?, ?, ?)").run(
+        crypto.randomUUID(),
+        login,
+        hashedPassword,
+      );
 
-    const newUser = getExistingUser(login);
+      const newUser = getExistingUser(login);
 
-    req.session.regenerate((err) => {
-      if (err) {
-        console.error("Session regenerate error:", err);
-        res.render("register", {
-          title: "Register form",
-          form: {},
-          error: `Session regenerate error: ${err}`,
-        });
-      }
+      req.session.regenerate((err) => {
+        if (err) {
+          console.error("Session regenerate error:", err);
+          res.render("register", {
+            title: "Register form",
+            form: {},
+            error: `Session regenerate error: ${err}`,
+          });
+        }
 
-      req.session.user = {
-        login: newUser.user_login,
-        id: newUser.user_uuid,
-      };
-      console.log("User registered successfully");
-      res.redirect(`/games/`);
-    });
+        req.session.user = {
+          login: newUser.user_login,
+          id: newUser.user_uuid,
+        };
+        console.log("User registered successfully");
+        res.redirect(`/games/`);
+      });
+    }
   }
 });
 

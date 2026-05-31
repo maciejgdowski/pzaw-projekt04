@@ -62,9 +62,10 @@ npm run dev
 - POST `/auth/login`
 - POST `/auth/register`
 
-### ścieżki /games/<...> znajdują się w pliku /routes/games.routes.js
-### ścieżki /auth/<...> znajdują się w pliku /routes/auth.routes.js
-### pozostałe ścieżki znajdują się w pliku index.js
+#### ścieżki /games/<...> znajdują się w pliku `/routes/games.routes.js`
+#### ścieżki /auth/<...> znajdują się w pliku `/routes/auth.routes.js`
+#### pozostałe ścieżki znajdują się w pliku `index.js`
+
 
 # CODE REVIEW
 
@@ -91,7 +92,32 @@ użytkownikiem
 - w index.js jest wszystko ze wszystkim, wyciągnij powiązane funkcjonalności do osobnych plików &rarr; ścieżki zostały przeniesione odpowiednio do `/routes/auth.routes.js` oraz `/routes/games.routes.js`
 
 
-### REVIEWER 2: <...>
+### REVIEWER 2: Kacper
+
+- README ładnie podzielone na części i czytelne.
+
+- Instalacja przebiega bez problemu.
+
+- Styl: 
+  + Czytelny, UI trochę "rozstrzelone".
+  + Przycisk 'Logout' jest niżej niż przycisk 'Back'. &rarr; naprawiłem UI, aby przyciski były na tej samej wysokości
+  + Na wąskich ekranach góra na siebie nachodzi. &rarr; dodałem responsywność dla górnego paska
+
+- Funkcjonalność i błędy: 
+  + Aplikacja działa jak powinna.
+  + Brak JAKIEJKOLWIEK walidacji danych przy rejestracji i logowaniu, można stworzyć konto nie wpisując nic w pola tekstowe. &rarr; wprowadziłem walidację loginu i hasła (min. 4 znaki)
+  + Przy wpisaniu niepoprawnego hasła, brak komunikatu. &rarr; dodałem komunikat o błędzie hasła
+  + Podobnie przy edytowaniu gier, po zostawieniu niektórych pól pustych wywala błąd, że gameId is not defined. &rarr; dodałem error handling dla formularza w EditGame
+  + Przy dodawaniu gier program sprawdza już niepustość pól edycyjnych.
+  + Gdy wpisałem długi ciąg znaków do opisu, UI rozszerza się poza ekran, brak zawijania linijek przy zbyt długim ciągu znaków. &rarr; dodałem walidatory długości z bazą danych oraz odpowienio dopasowałem styl css
+  + Przy rejestracji da się wpisać zbyt wiele znaków, do tego stopnia że aplikacja się zawiesza a potem, gdy klikam register pokazuje     'PayloadTooLargeError: request entity too large' &rarr; teraz login użytkownika nie może być dłuższy niż 24 znaki
+  + Gdy dam trochę krótszą nazwę, ale jednak dlugą na jakies 1000 znaków, panel górny się mocno rozjeżdża. &rarr; teraz nie można dodać nazwy dłuższej niż 50 znaków ze względu na limity bazy danych
+  + Podobnie przy dodawaniu gry, efekt jest ten sam. &rarr; naprawiłem to poprzez dodanie walidacji pól z max długością z bazy danych
+  + Przy edycji gry tak samo.
+  + Trochę nie rozumiem czemu jako użytkownik nie jestem w stanie przeglądać cudzych gier, ale takie jest założenie strony więc się nie kłócę.
+
+- Kod:
+  + Czytelny, ładnie podzielony na parę plików.
 
 ---
 

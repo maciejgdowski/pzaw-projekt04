@@ -48,6 +48,7 @@ gamesRouter.get("/new", (req, res) => {
     title: "Add New Game",
     genres: getAllGenres(),
     platforms: getAllPlatforms(),
+    errors: null,
     form: {},
   });
 });
@@ -59,8 +60,20 @@ gamesRouter.post("/new", (req, res) => {
   }
   const { title, release_date, developer, description, link, logo } = req.body;
 
+  const DBErrors = validateDataWithDB(title, developer, description, link, logo);
+
   const genres = getAllGenres();
   const platforms = getAllPlatforms();
+
+  if (DBErrors) {
+    return res.render("newGame", {
+      title: "Add New Game",
+      genres: genres,
+      platforms: platforms,
+      errors: Array(DBErrors),
+      form: req.body,
+    });
+  }
 
   const keys = Object.keys(req.body);
   const newGenres = [];
@@ -84,9 +97,9 @@ gamesRouter.post("/new", (req, res) => {
   if (errors.length > 0) {
     return res.render("newGame", {
       title: "Add New Game",
-      genres,
-      platforms,
-      errors,
+      genres: genres,
+      platforms: platforms,
+      errors: errors,
       form: req.body,
     });
   }
@@ -183,6 +196,7 @@ gamesRouter.get("/:game_uuid/edit", (req, res) => {
     gameId: gameUUID,
     genres: allGenres,
     platforms: allPlatforms,
+    errors: null,
     form: form,
   });
 });
@@ -203,6 +217,19 @@ gamesRouter.post("/:game_uuid/edit", (req, res) => {
   const genres = getAllGenres();
   const platforms = getAllPlatforms();
 
+  const DBErrors = validateDataWithDB(title, developer, description, link, logo);
+
+  if (DBErrors) {
+    return res.render("editGame", {
+      title: "Add New Game",
+      gameId: gameUUID,
+      genres: genres,
+      platforms: platforms,
+      errors: Array(DBErrors),
+      form: req.body,
+    });
+  }
+
   const keys = Object.keys(req.body);
   const newGenres = [];
   const newPlatforms = [];
@@ -215,6 +242,7 @@ gamesRouter.post("/:game_uuid/edit", (req, res) => {
 
   //form error handling
   const errors = [];
+
   if (!title || title.trim() === "") errors.push("Title is required.");
   if (newGenres.length === 0) errors.push("At least one genre must be selected.");
   if (newPlatforms.length === 0) errors.push("At least one platform must be selected.");
@@ -225,9 +253,10 @@ gamesRouter.post("/:game_uuid/edit", (req, res) => {
   if (errors.length > 0) {
     return res.render("editGame", {
       title: "Add New Game",
-      genres,
-      platforms,
-      errors,
+      gameId: gameUUID,
+      genres: genres,
+      platforms: platforms,
+      errors: errors,
       form: req.body,
     });
   }
@@ -285,3 +314,12 @@ gamesRouter.get("/:game_uuid", (req, res) => {
     }
   }
 });
+
+const validateDataWithDB = (game_title, developer, description, link, image) => {
+  if (game_title.length > 50) return "Game title must be max 50 chars";
+  if (developer.length > 50) return "Developer name must be max 50 chars";
+  if (description.length > 2000) return "Description must be max 2000 chars";
+  if (link.length > 512) return "Link must be max 512 chars";
+  if (image.length > 512) return "Image must be max 512 chars";
+  return null;
+};

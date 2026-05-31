@@ -16,7 +16,7 @@ CREATE TABLE
 	IF NOT EXISTS "users" (
 		"user_id" INTEGER,
 		"user_uuid" STRING,
-		"user_login" VARCHAR(100) NOT NULL,
+		"user_login" VARCHAR(24) NOT NULL,
 		"user_password" TEXT NOT NULL,
 		"is_admin" BOOLEAN NOT NULL DEFAULT 0,
 		PRIMARY KEY ("user_id" AUTOINCREMENT)
