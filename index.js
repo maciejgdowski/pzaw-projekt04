@@ -38,9 +38,9 @@ app.get("/", (req, res) => {
 });
 
 //other routes handling
-// app.use((req, res) => {
-//   res.redirect("/");
-// });
+app.use((req, res) => {
+  res.status(404).send("Page not found");
+});
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
