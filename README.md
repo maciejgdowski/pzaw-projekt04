@@ -67,6 +67,14 @@ npm run dev
 #### pozostałe ścieżki znajdują się w pliku `index.js`
 
 
+# UŻYTE TECHNOLOGIE
+- Express.js
+- EJS
+- SQLite
+- Bootstrap
+- SCSS
+
+
 # CODE REVIEW
 
 #### sposób czytania: {uwaga na temat programu} &rarr; {podjęte czynności odnośnie uwagi}
