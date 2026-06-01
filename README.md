@@ -79,7 +79,7 @@ npm run dev
 
 #### sposób czytania: {uwaga na temat programu} &rarr; {podjęte czynności odnośnie uwagi}
 
-### REVIEWER 1: pan Daniel
+### REVIEWER 1: pan Daniel (ocena wersji projekt04)
 - README zawiera tylko instrukcję uruchomienia, pamiętaj że to jest wizytówka projektu: warto dodać chociaż jedno zdanie opisujące projekt, a można dodatkowo udokumentować zaimplementowane funkcjonalności, obsługiwane ścieżki etc. &rarr; README zostało zaktualizowane o opis aplikacji oraz obsługiwane ścieżki
 
 - O ile dodanie danych testowych przy pomocy flagi środowiskowej jest okej, o tyle polecam zrobić do tego osobne narzędzie &rarr; utworzyłem skrypt `dev:populate` w package.json aby zautomatyzować dodawanie danych
@@ -100,7 +100,7 @@ użytkownikiem
 - w index.js jest wszystko ze wszystkim, wyciągnij powiązane funkcjonalności do osobnych plików &rarr; ścieżki zostały przeniesione odpowiednio do `/routes/auth.routes.js` oraz `/routes/games.routes.js`
 
 
-### REVIEWER 2: Kacper
+### REVIEWER 2: Kacper (ocena wersji po ulepszeniach zasugerowanych przez reviewer 1)
 
 - README ładnie podzielone na części i czytelne.
 
@@ -126,7 +126,3 @@ użytkownikiem
 
 - Kod:
   + Czytelny, ładnie podzielony na parę plików.
-
----
-
-styl css został wykonany przy pomocy biblioteki bootstrap oraz preprocesora scss.
