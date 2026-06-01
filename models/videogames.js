@@ -14,9 +14,17 @@ if (process.env.POPULATE_DB) {
   db.exec(populateDB);
   console.log("Database populated.");
 }
+if (process.env.GENERATE_ADMIN) {
+  const UUID = crypto.randomUUID();
+  const login = prompt("Enter admin login: ");
+  const password = bcrypt.hashSync(prompt("Enter admin password: "), 10);
+  db.exec(`INSERT INTO users (user_uuid, login, password, is_admin) VALUES (?, ?, ?, ?)`, [UUID, login, password, 1]);
+}
 
 export const checkIsAdmin = (user_uuid) => {
-  const data = db.prepare("SELECT is_admin FROM users WHERE user_uuid=?").get(user_uuid);
+  const data = db
+    .prepare("SELECT is_admin FROM users WHERE user_uuid=?")
+    .get(user_uuid);
 
   if (data === undefined) {
     console.error("user does not exist");
@@ -49,7 +57,9 @@ export const getGameData = (game_uuid, user_uuid) => {
   const userId = getUserId(user_uuid).user_id;
   const data = isAdmin
     ? db.prepare(`SELECT * FROM game_data WHERE game_uuid = ?`).get(game_uuid)
-    : db.prepare(`SELECT * FROM game_data WHERE game_uuid = ? AND user_id=?`).get(game_uuid, userId);
+    : db
+        .prepare(`SELECT * FROM game_data WHERE game_uuid = ? AND user_id=?`)
+        .get(game_uuid, userId);
 
   if (data === undefined) {
     console.error("user does not exist");
@@ -65,22 +75,34 @@ export const checkIfGameExists = (game_uuid, user_uuid) => {
 
 export const getGameGenres = (game_uuid) => {
   const genres = [];
-  const gameId = db.prepare("SELECT game_id FROM game_data WHERE game_uuid = ?").get(game_uuid);
-  const genres_query = db.prepare("SELECT genre_id FROM games_genres WHERE game_id = ?").all(gameId.game_id);
+  const gameId = db
+    .prepare("SELECT game_id FROM game_data WHERE game_uuid = ?")
+    .get(game_uuid);
+  const genres_query = db
+    .prepare("SELECT genre_id FROM games_genres WHERE game_id = ?")
+    .all(gameId.game_id);
   genres_query.forEach((genre) => {
-    genres.push(db.prepare(`SELECT genre_name FROM genres WHERE genre_id = ?`).get(genre.genre_id).genre_name);
+    genres.push(
+      db
+        .prepare(`SELECT genre_name FROM genres WHERE genre_id = ?`)
+        .get(genre.genre_id).genre_name
+    );
   });
   return genres;
 };
 
 export const getGamePlatforms = (game_uuid) => {
   const platforms = [];
-  const gameId = db.prepare("SELECT game_id FROM game_data WHERE game_uuid = ?").get(game_uuid);
+  const gameId = db
+    .prepare("SELECT game_id FROM game_data WHERE game_uuid = ?")
+    .get(game_uuid);
   const platforms_query = db
     .prepare("SELECT platform_id FROM games_platforms WHERE game_id = ?")
     .all(gameId.game_id);
   platforms_query.forEach((platform) => {
-    const name = db.prepare(`SELECT platform_name FROM platforms WHERE platform_id = ?`).get(platform.platform_id);
+    const name = db
+      .prepare(`SELECT platform_name FROM platforms WHERE platform_id = ?`)
+      .get(platform.platform_id);
     platforms.push(name.platform_name);
   });
   return platforms;
