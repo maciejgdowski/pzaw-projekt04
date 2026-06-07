@@ -29,6 +29,12 @@ npm run dev
      - login: user2
      - hasło: qwerty
 
+5. Tworzenie konta admina:
+```bash
+npm run dev:generateAdmin
+```
+  - należy uzupełnić w konsoli login oraz hasło
+
 # OPIS APLIKACJI
 
 - Aplikacja jest programem do wyświetlania informacji o grach wideo.
@@ -48,23 +54,25 @@ npm run dev
    + lista gatunków gry
 
 # ŚCIEŻKI APLIKACJI
-- GET `/` - strona startowa aplikacji
-- GET `/games` - lista wszystkich gier (dodanych przez użytkownika) -> główna strona aplikacji
-- GET `/games/random` - losuje jedną grę -> użytkownik zostaje przeniesiony do `/games/<uuid_losowej_gry>`
-- GET `/games/<game_uuid>` - lista informacji na temat danej gry
-- GET `/games/<game_uuid>/edit` - formularz edycji danych gry
-- POST `/games/<game_uuid>/edit` - aktualizacja danych gry
-- GET `/games/<game_uuid>/delete` - usunięcie gry wraz z jej danymi z bazy danych
-- GET `/games/new` - formularz dodania gry
-- POST `/games/new` - dodanie gry do bazy danych
-- GET `/auth/login` - formularz logowania do aplikacji
-- GET `/auth/register` - formularz rejstracji do aplikacji
-- POST `/auth/login`
-- POST `/auth/register`
+| RODZAJ POŁĄCZENIA | NAZWA ŚCIEŻKI | OPIS |
+|---|---|---|
+| GET | `/` | strona startowa aplikacji |
+| GET | `/games` | lista wszystkich gier (dodanych przez użytkownika) -> główna strona aplikacji |
+| GET | `/games/random` | losuje jedną grę -> użytkownik zostaje przeniesiony do `/games/<uuid_losowej_gry>` |
+| GET | `/games/<game_uuid>` | lista informacji na temat danej gry |
+| GET | `/games/<game_uuid>/edit` | formularz edycji danych gry |
+| POST | `/games/<game_uuid>/edit` | aktualizacja danych gry |
+| GET | `/games/<game_uuid>/delete` | usunięcie gry wraz z jej danymi z bazy danych |
+| GET | `/games/new` | formularz dodania gry |
+| POST | `/games/new` | dodanie gry do bazy danych |
+| GET | `/auth/login` | formularz logowania do aplikacji |
+| GET | `/auth/register` | formularz rejestracji do aplikacji |
+| POST | `/auth/login` |  |
+| POST | `/auth/register` |  |
 
-#### ścieżki /games/<...> znajdują się w pliku `/routes/games.routes.js`
-#### ścieżki /auth/<...> znajdują się w pliku `/routes/auth.routes.js`
-#### pozostałe ścieżki znajdują się w pliku `index.js`
+###### ścieżki /games/<...> znajdują się w pliku `/routes/games.routes.js`
+###### ścieżki /auth/<...> znajdują się w pliku `/routes/auth.routes.js`
+###### pozostałe ścieżki znajdują się w pliku `index.js`
 
 
 # UŻYTE TECHNOLOGIE
@@ -126,3 +134,22 @@ użytkownikiem
 
 - Kod:
   + Czytelny, ładnie podzielony na parę plików.
+
+
+### REVIEWER 3: Stanisław (ocena wersji po ulepszeniach zasugerowanych przez reviewer 2)
+
+README
+- Szczegółowe, ładnie podzielone, nie mam zastrzeżeń.
+
+STRUKTURA
+- Przemyślana struktura projektu, tu też nie mam zastrzeżeń.
+
+WYGLĄD/STYL
+- Wygląd strony spójny i estetyczny, ale: przycisk "menu" gdy jest się w jakiejś grze nie ma on hover'a. Oprócz tego małej uwagi nie mam zastrzeżeń. &rarr; dodałem animację hover dla przycisku "menu"
+
+FUNKCJONALNOSĆ
+- Aplikacja działa jak powinna, jednak nie widziałem zgody na COOKIES. &rarr; aplikacja nie używa opcjonalnych cookies; jedyny wymagany plik cookie to plik przechowujący id sesji użytkownika, aby nie wylogowywać się po wyjściu z przeglądarki
+
+POMYSŁ/KREATYWNOŚĆ
+- Ogólnie świetny projekt, nie ma co się przyczepić. Osobiście dodałbym możliwość oceniania gier w skali 1–10 bezpośrednio z widoku gry, a w dalszej perspektywie publiczne profile z pokazaniem czyjejś kolekcji. Można by też pomyśleć o filtrowaniu/sortowaniu listy gier po gatunku, platformie czy dacie wydania. Projekt jest solidną bazą pod coś naprawdę fajnego.
+

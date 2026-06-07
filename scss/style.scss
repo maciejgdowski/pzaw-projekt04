@@ -1,13 +1,15 @@
 @import "../node_modules/bootstrap/scss/mixins/banner";
 @include bsBanner("");
 
-
 // scss-docs-start import-stack
 // Configuration
 $primary: #392cc4;
+$primary-dark: #2a1f8a;
 
 $main-btn-1: #f9dde8;
 $main-btn-2: #ee87b3;
+$main-btn-1-dark: #3d2e42;
+$main-btn-2-dark: #7a3a52;
 
 @import "../node_modules/bootstrap/scss/functions";
 
@@ -81,6 +83,28 @@ $theme-colors: map-merge(
     box-sizing: border-box;
 }
 
+// Light mode (default)
+:root {
+  --bg-primary: #ffffff;
+  --text-primary: #000000;
+  --bg-secondary: #f8f9fa;
+  --border-color: #dee2e6;
+}
+
+// Dark mode
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --text-primary: #ffffff;
+  --bg-secondary: #2d2d2d;
+  --border-color: #444444;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 .main-menu {
     background: linear-gradient(
         135deg,
@@ -91,7 +115,17 @@ $theme-colors: map-merge(
     background-size: 200% 100%;
     background-position: 0% 50%;
     animation: moveGradient 12s linear infinite;
+    
+    [data-theme="dark"] & {
+      background: linear-gradient(
+        135deg,
+        darken($primary-dark, 20%) 0%,
+        darken($primary-dark, 40%) 50%,
+        darken($primary-dark, 50%) 100%,
+      );
+    }
 }
+
 @keyframes moveGradient {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
@@ -103,11 +137,26 @@ $theme-colors: map-merge(
   &:hover{
     background-color: darken($main-btn-1, 10%) !important;
   }
+  
+  [data-theme="dark"] & {
+    background-color: $main-btn-1-dark !important;
+    &:hover{
+      background-color: lighten($main-btn-1-dark, 10%) !important;
+    }
+  }
 }
+
 .btn-2{
   background-color: $main-btn-2 !important;
   &:hover{
     background-color: darken($main-btn-2, 10%) !important;
+  }
+  
+  [data-theme="dark"] & {
+    background-color: $main-btn-2-dark !important;
+    &:hover{
+      background-color: lighten($main-btn-2-dark, 10%) !important;
+    }
   }
 }
 
@@ -123,7 +172,22 @@ img{
 
 .errors{
   color: $red-600;
+  
+  [data-theme="dark"] & {
+    color: lighten($red-600, 20%);
+  }
 }
+
 .btn-main-menu{
   background-color: $pink-400 !important;
+  &:hover{
+    background-color: darken($pink-400, 10%) !important;
+  }
+  
+  [data-theme="dark"] & {
+    background-color: darken($pink-400, 30%) !important;
+    &:hover{
+      background-color: darken($pink-400, 40%) !important;
+    }
+  }
 }
