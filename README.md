@@ -103,7 +103,7 @@ użytkownikiem
 
 - UX: Wizualnie jest spójnie i ładnie.
 
-- bcrypt jest już przestarzały, przerzuć się na argon &rarr; wg. opinii osób na google argon jest nowocześniejszy i lepszy, ale bcrypt nie zawiera podatności na złośliwe oprogramowania, więc bibliotekę zostawiam
+- bcrypt jest już przestarzały, przerzuć się na argon &rarr; zamieniłem bcrypt na bibliotekę argon2
 
 - w index.js jest wszystko ze wszystkim, wyciągnij powiązane funkcjonalności do osobnych plików &rarr; ścieżki zostały przeniesione odpowiednio do `/routes/auth.routes.js` oraz `/routes/games.routes.js`
 

@@ -1,8 +1,9 @@
 //accounts management
 import { Router } from "express";
 import { getExistingUser } from "../index.js";
-import * as bcrypt from "bcrypt";
+import { hash, verify } from "argon2";
 import { db } from "../models/videogames.js";
+import crypto from "node:crypto";
 
 export const authRouter = Router();
 
@@ -30,7 +31,7 @@ authRouter.post("/login", async (req, res) => {
       error: "User not found",
     });
   }
-  const passwordMatch = await bcrypt.compare(password, user.user_password);
+  const passwordMatch = await verify(user.user_password, password);
   if (!passwordMatch) {
     console.error("Incorrect password");
     return res.render("login", {
@@ -94,7 +95,7 @@ authRouter.post("/register", async (req, res) => {
       error: "Password must have at least 4 letters",
     });
   } else {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const hashedPassword = await hash(req.body.password);
     //check if user with the same login already exists
     const existingUser = getExistingUser(login);
     if (existingUser) {
@@ -139,7 +140,7 @@ authRouter.get("/logout", (req, res) => {
     if (err) {
       console.error("Session destroy error:", err);
     }
-    res.clearCookie("connect.sid"); //domyslna nazwa dla express-session
+    res.clearCookie("connect.sid");
     res.redirect("/games/");
   });
 });

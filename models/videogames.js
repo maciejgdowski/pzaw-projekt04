@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import { getUserId } from "../index.js";
 import readline from "node:readline/promises";
 import { stdin, stdout } from "node:process";
-import * as bcrypt from "bcrypt";
+import { hash, verify } from "argon2";
+import crypto from "node:crypto";
 
 dotenv.config();
 
@@ -23,12 +24,13 @@ if (process.env.GENERATE_ADMIN) {
   const login = await rl.question("Enter admin login: ");
   const p = await rl.question("Enter admin password: ");
 
-  const password = bcrypt.hashSync(p, 10);
+  const password = await hash(p);
   db.prepare(
     `INSERT INTO users (user_id, user_uuid, user_login, user_password, is_admin) VALUES (?, ?, ?, ?, ?)`,
   ).run(null, UUID, login, password, 1);
 
   console.log("created an admin account: ", { login: login, password: p });
+  rl.close();
 }
 
 export const checkIsAdmin = (user_uuid) => {

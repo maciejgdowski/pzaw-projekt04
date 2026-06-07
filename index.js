@@ -1,7 +1,6 @@
 import express from "express";
 import morgan from "morgan";
 import fs from "node:fs";
-import * as bcrypt from "bcrypt";
 import session from "express-session";
 import { db } from "./models/videogames.js";
 import { randomBytes } from "node:crypto";

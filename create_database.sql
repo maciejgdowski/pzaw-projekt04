@@ -82,21 +82,21 @@ VALUES
 		NULL,
 		'af6cd094-99fe-489b-b297-9b13b1b5e8e3',
 		'admin',
-		'$2b$10$6S/T4DUCRnyMgQ/X5F4EiuoE6Mi1DZMoHPO3.4s7CA20vwJ1F0c5G',
+		'$argon2i$v=19$m=16,t=2,p=1$YmVaaHM4VWI2a29rbGxBYg$O9Y/DDgc/51kjWdSbTn55g',
 		1
 	),
 	(
 		NULL,
 		'6120d73d-b735-4cab-9bfe-b75946a341f7',
 		'user1',
-		'$2b$10$8OebMrgVaX3VPsv.UlM2bOasQgOsn6CUU2htntVLvm3OOlZu5TzTe',
+		'$argon2i$v=19$m=16,t=2,p=1$YmVaaHM4VWI2a29rbGxBYg$1mBPCteJS40iy51RbO0oHw',
 		0
 	),
 	(
 		NULL,
 		'd2661b64-222b-403f-9239-f248f96871f3',
 		'user2',
-		'$2b$10$BpDHOV7lphhVxGXo49c1BexmXCyqjyJJiXdSYoLWbfpJW7tvgrQLG',
+		'$argon2i$v=19$m=16,t=2,p=1$YmVaaHM4VWI2a29rbGxBYg$VUAmVIfTOgcY89QR8EnWBg',
 		0
 	);
 
